@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:notes_app/widgets/app_bar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AddNoteScreen extends StatefulWidget {
@@ -25,26 +26,20 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
 
     notesList.add(jsonEncode(newNote));
 
-  
     await prefs.setStringList("notes", notesList);
 
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(content: Text("Note Saved Successfully")),
     );
 
-    Navigator.pop(context, true); 
+    Navigator.pop(context, true);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.blue,
-        iconTheme: const IconThemeData(color: Colors.white),
-        title: const Text(
-          "Add Note",
-          style: TextStyle(color: Colors.white),
-        ),
+      appBar: CustomAppBar(
+        title: "Add Note",
       ),
       body: Padding(
         padding: const EdgeInsets.all(16),
@@ -73,25 +68,27 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
           ],
         ),
       ),
-     bottomNavigationBar: Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: SizedBox(
-        width: double.infinity,
-        height: 50, 
-        child: ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.blue,
-            foregroundColor: Colors.white,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(8),
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: SizedBox(
+          width: double.infinity,
+          height: 50,
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.blue,
+              foregroundColor: Colors.white,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
+              ),
+            ),
+            onPressed: _saveNote,
+            child: const Text(
+              "Save",
+              style: TextStyle(fontSize: 20),
             ),
           ),
-          onPressed: _saveNote,
-          child: const Text("Save"),
         ),
       ),
-    ),
-  );
+    );
+  }
 }
-}
-
